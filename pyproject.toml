@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "streaming_app"
+version = "0.1.0"
+description = "Стриминговая платформа. Аналог Twich"
+authors = ["Евгений <gogi_2_nogi@mail.ru>"]
+readme = "README.md"
+#package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+annotated-types = "0.7.0"
+anyio = "4.6.2.post1"
+dnspython = "2.7.0"
+exceptiongroup = "1.2.2"
+fastapi = "0.115.5"
+idna = "3.10"
+motor = "3.6.0"
+pydantic = "2.10.2"
+pydantic_core = "2.27.1"
+pymongo = "4.9.2"
+sniffio = "1.3.1"
+starlette = "0.41.3"
+typing_extensions = "4.12.2"
+uvicorn = "^0.34.0"
+python-dotenv = "^1.0.0"
+authx = "^1.4.1"
+envparse = "^0.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
