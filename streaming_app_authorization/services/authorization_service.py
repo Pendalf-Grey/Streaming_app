@@ -97,9 +97,6 @@ def verify_user(func):
     return wrapper
 
 
-# Асинхронная функция проверки наличия id пользователя в БД (необязательная)
-# Должен лезть в БД, искать юзернейм (или другое поле), а потом искать id
-# @app.get("/add_to_database/{item_id}")
 async def find_user_id(item_id: str):
     try:
         # Преобразуем строку в ObjectId
@@ -114,50 +111,3 @@ async def find_user_id(item_id: str):
         query["_id"] = str(query["_id"])
         return query
     raise HTTPException(status_code=404, detail="Item not found in MongoDB")
-
-
-
-# Это обработчик исключения от AuthX.
-# AuthX выводит ошибку в терминал, а не в OpenAPI
-# Проблема. Если юзер самостоятельноо удаляет куки, то при успешной авторизации и редиректе на /home они не подкидываются заново
-#
-# @app.exception_handler(MissingTokenError)
-# async def missing_token_exception_handler(request: Request, exc: MissingTokenError):
-#     return RedirectResponse(url="/login", status_code=status.HTTP_303_SEE_OTHER)
-
-
-# security = HTTPBearer()
-#
-# Функция извлечения токена из куки
-# При использовании security = HTTPBearer()
-# async def get_current_user(request: Request):
-#     # Извлекаем токен из куки
-#     access_token = request.cookies.get(config.JWT_ACCESS_COOKIE_NAME)
-#     if not access_token:
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Not authenticated"
-#         )
-#
-#     try:
-#         # Декодируем токен
-#         payload = jwt.decode(access_token, config.JWT_SECRET_KEY, algorithms=[config.JWT_ALGORITHM])
-#         user_id = payload.get("sub")
-#         if user_id is None:
-#             raise HTTPException(
-#                 status_code=status.HTTP_401_UNAUTHORIZED,
-#                 detail="Invalid token"
-#             )
-#     except jwt.ExpiredSignatureError:
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Token expired"
-#         )
-#     except jwt.InvalidTokenError:
-#         raise HTTPException(
-#             status_code=status.HTTP_401_UNAUTHORIZED,
-#             detail="Invalid token"
-#         )
-#
-#     # Возвращаем идентификатор пользователя
-#     return user_id
