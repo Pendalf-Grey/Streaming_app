@@ -12,7 +12,7 @@ services:
     env_file:
       - .env
     environment:
-      - MONGODB_URL=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTS}:${MONGO_PORT}/user
+      - MONGODB_URL=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:${MONGO_PORT}/user
 
 #    При изменениях внутри кода - не нужно будет перезапускать контейнер для обновления проекта
 #    Чтобы это работало - название пути монтирования должно совпадать с WORKDIR из Dockerfile
