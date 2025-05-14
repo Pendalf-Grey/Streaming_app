@@ -1,0 +1,38 @@
+version: "3.9"
+
+networks:
+  app-net:
+    driver: bridge
+
+services:
+  fastapi-authorization:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - MONGODB_URL=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOSTS}:${MONGO_PORT}/user
+
+#    При изменениях внутри кода - не нужно будет перезапускать контейнер для обновления проекта
+#    Чтобы это работало - название пути монтирования должно совпадать с WORKDIR из Dockerfile
+    volumes:
+      - ./:/web_fastapi
+    depends_on:
+      - mongo
+    networks:
+      - app-net
+
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: user
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "${MONGO_PORT}"
+    networks:
+      - app-net
+
+
